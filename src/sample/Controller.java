@@ -18,6 +18,8 @@ import sun.audio.AudioStream;
 import java.io.*;
 import java.net.URL;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.ResourceBundle;
 import java.util.Scanner;
 import java.util.logging.Level;
@@ -26,7 +28,9 @@ import java.util.logging.Logger;
 public class Controller {
     private static final Logger logger = Logger.getLogger(Controller.class.getName());
     private NoteDao noteDao = new NoteDao();
+    private MediaFileDao mediaFileDao = new MediaFileDao();
 
+    public MenuItem addAttachmentMenuItem;
     public MenuItem newNote;
     public MenuItem open;
     public TextArea textContent;
@@ -39,7 +43,6 @@ public class Controller {
     public ListView<String> noteList; //Ntitle from database
     public TextField fileNameTextField;
     public MenuItem saveAsMenuItem;
-    public Button testAddNoteButton;
 
     ObservableList<String> data = FXCollections.observableArrayList();
 
@@ -87,8 +90,20 @@ public class Controller {
 
     public void saveNoteAndAddToListView(ActionEvent actionEvent) throws NullPointerException {
         //close the newNoteWindow
+        String Ntitle = fileNameTextField.getText();
         Stage stage = (Stage) saveButton.getScene().getWindow();
         stage.close();
+
+        //add this new note to the database
+        String date = new SimpleDateFormat("yyyy/MM/dd").format(new Date());
+        try {
+            Note note = new Note(222, Ntitle, "test", "", date);
+            int id = noteDao.saveNote(note);
+            if (id > 0) System.out.println("save successfully");
+            else System.out.println("failed");
+        } catch (Exception e) {
+            logger.log(Level.SEVERE, e.getMessage());
+        }
         //add the note saved to the listview in the notelist section
 
 
@@ -101,14 +116,17 @@ public class Controller {
         //WHERE idNote = /note that is opened/
     }
 
-    public void testAddNote(ActionEvent actionEvent) throws SQLException {
-        try {
-            Note note = new Note(100, "Test Title", "test", "this is the note to test the addNote", "2021/03/25");
-            int id = noteDao.saveNote(note);
-            if (id > 0) System.out.println("save successfully");
-            else System.out.println("failed");
-        } catch (Exception e) {
-            logger.log(Level.SEVERE, e.getMessage());
-        }
+
+    public void addAttachment(ActionEvent actionEvent) {
+        //pop upwindow to select file and get basic information of the attachment and a button to submit
+        //add the information of the attachment file to the database just like this
+//        try {
+//            Note note = new Note(222, Ntitle, "test", "", date);
+//            int id = noteDao.saveNote(note);
+//            if (id > 0) System.out.println("save successfully");
+//            else System.out.println("failed");
+//        } catch (Exception e) {
+//            logger.log(Level.SEVERE, e.getMessage());
+//        }
     }
 }

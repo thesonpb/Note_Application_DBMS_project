@@ -20,10 +20,9 @@ public class NoteDao {
         try {
             connection = Database.getDBConnection();
             connection.setAutoCommit(false);
-            String query = "INSERT INTO note(`idNote`, `Ntitle`, `Ntag`, `Ncontent`, `NdateCreated`) VALUES(?, ?, ?, ?, ?)";
+            String query = "INSERT INTO note(`Ntitle`, `Ntag`, `Ncontent`, `NdateCreated`) VALUES(?, ?, ?, ?)";
             statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             int counter = 1;
-            statement.setInt(counter++, note.getIdNote());
             statement.setString(counter++, note.getNtitle());
             statement.setString(counter++, note.getNtag());
             statement.setString(counter++, note.getNcontent());

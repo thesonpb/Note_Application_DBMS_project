@@ -20,10 +20,9 @@ public class MediaFileDao {
         try {
             connection = Database.getDBConnection();
             connection.setAutoCommit(false);
-            String query = "INSERT INTO mediaFile(idMedia, Mname, Msize, Mlink, Mtype, idNote) VALUES(?, ?, ?, ?, ?, ?)";
+            String query = "INSERT INTO mediaFile(`Mname`, `Msize`, `Mlink`, `Mtype`, `idNote`) VALUES(?, ?, ?, ?, ?)";
             statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             int counter = 1;
-            statement.setInt(counter++, mediaFile.getIdMedia());
             statement.setString(counter++, mediaFile.getMname());
             statement.setInt(counter++, mediaFile.getMsize());
             statement.setString(counter++, mediaFile.getMlink());
