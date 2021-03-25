@@ -96,11 +96,14 @@ public class Controller {
 
     public void saveTextContentToTheFile(ActionEvent actionEvent) {
         //update Ncontent and save to database
+        //UPDATE note
+        //SET Ncontent = 'New Text Content'
+        //WHERE idNote = /note that is opened/
     }
 
     public void testAddNote(ActionEvent actionEvent) throws SQLException {
         try {
-            Note note = new Note(9, "Test Title", "test", "this is the note to test the addNote", "2021/03/25");
+            Note note = new Note(100, "Test Title", "test", "this is the note to test the addNote", "2021/03/25");
             int id = noteDao.saveNote(note);
             if (id > 0) System.out.println("save successfully");
             else System.out.println("failed");
