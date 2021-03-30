@@ -11,6 +11,7 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import sun.audio.AudioPlayer;
 import sun.audio.AudioStream;
@@ -25,15 +26,15 @@ import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class Controller {
-    private static final Logger logger = Logger.getLogger(Controller.class.getName());
+public class Controller implements Initializable{
     private NoteDao noteDao = new NoteDao();
+    private Note openingNote = new Note();
     private MediaFileDao mediaFileDao = new MediaFileDao();
-
+    private static final Logger logger = Logger.getLogger(Controller.class.getName());
     public MenuItem addAttachmentMenuItem;
     public MenuItem newNote;
     public MenuItem open;
-    public TextArea textContent;
+    public TextField textContent;
     public ListView attachmentContent; //mediaFile from database
     public AnchorPane newNoteWindow;
     public MenuItem closeMenuItem;
@@ -45,25 +46,30 @@ public class Controller {
     public MenuItem saveAsMenuItem;
 
     ObservableList<String> data = FXCollections.observableArrayList();
+    String textContentDraft = null;
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
 
-    public void createNewNote(ActionEvent actionEvent) {
-        //delete everything on the NotecontentField
-        textContent.setText("ddd");
-        //add "untitled" item to the notelist
+        textContent.textProperty().addListener((observable, oldValue, newValue) ->{
+            textContentDraft = newValue;
+        }) ;
     }
 
-    public void showTextContentAndAttachment(ActionEvent actionEvent) {
-        textContent.setText("text opened");
-        //attachmentContent. (get items for this and show those items)
+    public void createNewNote(ActionEvent actionEvent) {
+        //delete everything on the NotecontentField ===CHECKED===
+        textContent.setText("");
+        //add "untitled" item to the notelist
+        openingNote.setNtitle("untitled");
+        noteList.getItems().add("untitled");
     }
 
     public void closeNote(ActionEvent actionEvent) {
-        //delete everything on the NoteContentField
+        //delete everything on the NoteContentField ===CHECKED===
         textContent.setText("Note closed");
     }
 
     public void saveNote(ActionEvent actionEvent) {
-        //pop up a window for inserting file name and save button
+        //pop up a window for inserting file name and save button ===CHECKED===
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("newNoteWindow.fxml"));
             Parent root1 = (Parent) fxmlLoader.load();
@@ -77,17 +83,21 @@ public class Controller {
             System.out.println("Cant load new window");
         }
 
-        textContent.setText("Note saved");
-        //change Note content in sql to textContent.getText()
+        //change Note content in sql to textContent.getText() ===CHECKED===
+        //sau phải đổi idNote thành Ntitle vì đây là lưu 1 file mới nên là lúc hỏi nhập tên file sẽ lấy Ntitle từ ô nhập sau đó tìm trong csdl
+        try {
+            noteDao.saveTextContent(textContentDraft, 3);
 
-
+        } catch (Exception e) {
+            logger.log(Level.SEVERE, e.getMessage());
+        }
 
     }
 
     public void quitApp(ActionEvent actionEvent) {
         System.exit(0);
     }
-
+    // phần này là test 1 nút save ở ngoài nhưng đã bỏ đi, mục đích là lưu 1 note vào csdl, có ngày tháng, nội dung, tiêu đề...
     public void saveNoteAndAddToListView(ActionEvent actionEvent) throws NullPointerException {
         //close the newNoteWindow
         String Ntitle = fileNameTextField.getText();
@@ -110,23 +120,34 @@ public class Controller {
     }
 
     public void saveTextContentToTheFile(ActionEvent actionEvent) {
-        //update Ncontent and save to database
-        //UPDATE note
-        //SET Ncontent = 'New Text Content'
-        //WHERE idNote = /note that is opened/
+        //update Ncontent and save to database ===CHECKED===
+        //sau phải đổi idNote thành idNote của openingNote
+        try {
+            noteDao.saveTextContent(textContentDraft, 3);
+
+        } catch (Exception e) {
+            logger.log(Level.SEVERE, e.getMessage());
+        }
     }
 
 
     public void addAttachment(ActionEvent actionEvent) {
-        //pop upwindow to select file and get basic information of the attachment and a button to submit
-        //add the information of the attachment file to the database just like this
-//        try {
-//            Note note = new Note(222, Ntitle, "test", "", date);
-//            int id = noteDao.saveNote(note);
-//            if (id > 0) System.out.println("save successfully");
-//            else System.out.println("failed");
-//        } catch (Exception e) {
-//            logger.log(Level.SEVERE, e.getMessage());
-//        }
+        //pop upwindow to select file and get basic information of the attachment and a button to submit ===CHECKED===
+        try {
+            Stage stage = new Stage();
+
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Open Resource File");
+            File file = fileChooser.showOpenDialog(stage);
+            String Mname = file.getName();
+            String Mlink = file.getAbsolutePath();
+            Long Msize = file.length();
+            System.out.println(Msize);
+            //add and show that file on attachmentListView
+            attachmentContent.getItems().add(file);
+        } catch (Exception e) {
+            System.out.println("Cant load new window");
+        }
+
     }
 }
