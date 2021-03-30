@@ -92,6 +92,9 @@ public class NoteDao {
         }//end try
     }
 
+    public void getAllNoteToData() {
+    }
+
 //    public int findIDNote(String Nname) throws SQLException {
 //        String value = null;
 //        Connection connection = null;

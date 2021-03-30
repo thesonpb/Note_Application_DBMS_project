@@ -49,7 +49,9 @@ public class Controller implements Initializable{
     String textContentDraft = null;
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
+        // lấy tất cả các note trong csdl cho vào data rồi cho vào notelist để hiển thị danh sách note ra
+        noteDao.getAllNoteToData();
+        noteList.getItems().addAll(data);
         textContent.textProperty().addListener((observable, oldValue, newValue) ->{
             textContentDraft = newValue;
         }) ;
