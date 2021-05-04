@@ -64,7 +64,7 @@
                 <Color blue="0.624" green="0.624" red="0.624" fx:id="x2" />
               </textFill>
             </Label>
-                  <ListView fx:id="noteList" layoutY="41.0" prefHeight="504.0" prefWidth="220.0" />
+                  <ListView fx:id="noteList" layoutY="41.0" prefHeight="504.0" prefWidth="220.0" onMouseClicked="#displayTextContent" />
           </children>
         </AnchorPane>
         <ScrollPane prefHeight="-1.0" prefWidth="-1.0">
