@@ -93,24 +93,18 @@ public class Controller implements Initializable {
     }
 
     public void saveNote(ActionEvent actionEvent) {
-
-
         if (openingNote.getNtitle() == null) {
             System.out.println("title null");
-            return;}
-
+            return;
+        }
         try {
-            System.out.println("displaying window|||||||||||||||||||||||||||||||1111111");
             Parent root = FXMLLoader.load(getClass().getResource("saveAsWindow.fxml"));
             System.out.println("root = ");
             Stage stage = new Stage();
-            System.out.println("displaying window|||||||||||||||||||||||||||||||");
-
             stage.getIcons().add(new Image(getClass().getResourceAsStream("save as icon.png")));
             stage.setTitle("SAVE AS");
             stage.setScene(new Scene(root, 100, 60));
             stage.show();
-
         } catch (Exception e) {
             System.out.println("Cant load new window");
         }
