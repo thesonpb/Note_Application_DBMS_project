@@ -216,8 +216,6 @@ public class NoteDao {
                 //Retrieve by column name
                 String title = rs.getString("Ntitle");
 
-                //Display values
-                System.out.print(", First: " + title);
                 Controller.data.add(title);
             }
             rs.close();

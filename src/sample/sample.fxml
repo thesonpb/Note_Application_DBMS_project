@@ -27,7 +27,7 @@
                   <MenuItem fx:id="addAttachmentMenuItem" mnemonicParsing="false" onAction="#addAttachment" text="Add attachment" />
             <MenuItem fx:id="closeMenuItem" mnemonicParsing="false" onAction="#closeNote" text="Close" />
                   <MenuItem fx:id="saveMenuItem" mnemonicParsing="false" onAction="#saveTextContentToTheFile" text="Save" />
-            <MenuItem fx:id="saveAsMenuItem" mnemonicParsing="false" onAction="#saveNote" text="Save as" />
+            <MenuItem fx:id="saveAsMenuItem" mnemonicParsing="false" onAction="#saveNote" text="Save as"  />
             <MenuItem fx:id="quitMenuItem" mnemonicParsing="false" onAction="#quitApp" text="Quit" />
           </items>
         </Menu>

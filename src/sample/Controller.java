@@ -23,6 +23,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Controller implements Initializable {
+    public AnchorPane saveNoteWindow;
     private NoteDao noteDao = new NoteDao();
     private Note openingNote = new Note();
     private MediaFileDao mediaFileDao = new MediaFileDao();
@@ -92,29 +93,24 @@ public class Controller implements Initializable {
     }
 
     public void saveNote(ActionEvent actionEvent) {
-//        ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-//        |||    IMPORTANT                                       |||
-//        |||    IMPORTANT                                       |||
-//        |||    IMPORTANT                                       |||
-//        |||    IMPORTANT                                       |||
-//        |||    IMPORTANT                                       |||
-//        |||    IMPORTANT                                       |||
-//        |||    IMPORTANT                                       |||
-//        |||       làm cho cửa sổ mới hiện lên                  |||
-//        ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+
 
         if (openingNote.getNtitle() == null) {
             System.out.println("title null");
             return;}
+
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("saveAsWindow.fxml"));
-            Parent root1 =  fxmlLoader.load();
+            System.out.println("displaying window|||||||||||||||||||||||||||||||1111111");
+            Parent root = FXMLLoader.load(getClass().getResource("saveAsWindow.fxml"));
+            System.out.println("root = ");
             Stage stage = new Stage();
+            System.out.println("displaying window|||||||||||||||||||||||||||||||");
 
             stage.getIcons().add(new Image(getClass().getResourceAsStream("save as icon.png")));
             stage.setTitle("SAVE AS");
-            stage.setScene(new Scene(root1));
+            stage.setScene(new Scene(root, 100, 60));
             stage.show();
+
         } catch (Exception e) {
             System.out.println("Cant load new window");
         }
