@@ -9,7 +9,7 @@
 <AnchorPane fx:id="saveNoteWindow" prefHeight="150.0" prefWidth="408.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
    <children>
       <TextField fx:id="fileNameTextField" layoutX="98.0" layoutY="60.0" prefHeight="31.0" prefWidth="216.0" />
-      <Button fx:id="saveButton" layoutX="325.0" layoutY="60.0" mnemonicParsing="false" onAction="#saveNoteAndAddToListView" text="Save as" />
+      <Button fx:id="saveAsButton" layoutX="325.0" layoutY="60.0" mnemonicParsing="false" onAction="#saveNote" text="Save as" />
       <Label layoutX="14.0" layoutY="62.0" prefHeight="21.0" prefWidth="76.0" text="File name:">
          <font>
             <Font size="17.0" />

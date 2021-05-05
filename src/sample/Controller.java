@@ -13,17 +13,12 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import sun.audio.AudioPlayer;
-import sun.audio.AudioStream;
-import sun.font.DelegatingShape;
 
 import java.io.*;
 import java.net.URL;
-import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.ResourceBundle;
-import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -73,13 +68,20 @@ public class Controller implements Initializable {
         textContent.setText("");
         //add "untitled" item to the notelist
         openingNote.setNtitle("untitled");
+        int i = 1;
+        while (NoteDao.isOverlapTitle(openingNote.getNtitle())) {
+            openingNote.setNtitle("untitled" + i);
+            i++;
+        }
+
         openingNote.setNtag("");
-        noteList.getItems().add("untitled");
+        noteList.getItems().add(openingNote.getNtitle());
         isSaved = false;
         isFirstTimeSaved = true;
     }
 
     public void closeNote(ActionEvent actionEvent) {
+        if (openingNote == null) return;
         //delete everything on the NoteContentField ===CHECKED===
         textContent.setText("Note closed");
         openingNote = new Note();
@@ -90,10 +92,12 @@ public class Controller implements Initializable {
     }
 
     public void saveNote(ActionEvent actionEvent) {
-        //pop up a window for inserting file name and save button ===CHECKED===
+        if (openingNote.getNtitle() == null) {
+            System.out.println("title null");
+            return;}
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("newNoteWindow.fxml"));
-            Parent root1 = (Parent) fxmlLoader.load();
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("saveAsWindow.fxml"));
+            Parent root1 =  fxmlLoader.load();
             Stage stage = new Stage();
 
             stage.getIcons().add(new Image(getClass().getResourceAsStream("save as icon.png")));
@@ -112,7 +116,9 @@ public class Controller implements Initializable {
                 System.out.println("đổi tên đi");//pop up cửa sổ đổi tên
             else {
                 String date = new SimpleDateFormat("yyyy/MM/dd").format(new Date());
-                openingNote.setNcontent(textContentDraft);
+                if (textContentDraft != null) {
+                    openingNote.setNcontent(textContentDraft);
+                } else openingNote.setNcontent("");
                 openingNote.setNdateCreated(date);
                 noteDao.saveNote(openingNote);
                 isSaved = true;
@@ -134,6 +140,10 @@ public class Controller implements Initializable {
 
 
     public void saveTextContentToTheFile(ActionEvent actionEvent) {
+        if (openingNote.getNtitle() == null) {
+            System.out.println("title null");
+            return;
+        }
         //update Ncontent and save to database ===CHECKED===
         //sau phải đổi idNote thành idNote của openingNote
         try {
