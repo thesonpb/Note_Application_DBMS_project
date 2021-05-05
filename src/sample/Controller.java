@@ -92,6 +92,17 @@ public class Controller implements Initializable {
     }
 
     public void saveNote(ActionEvent actionEvent) {
+//        ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+//        |||    IMPORTANT                                       |||
+//        |||    IMPORTANT                                       |||
+//        |||    IMPORTANT                                       |||
+//        |||    IMPORTANT                                       |||
+//        |||    IMPORTANT                                       |||
+//        |||    IMPORTANT                                       |||
+//        |||    IMPORTANT                                       |||
+//        |||       làm cho cửa sổ mới hiện lên                  |||
+//        ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+
         if (openingNote.getNtitle() == null) {
             System.out.println("title null");
             return;}
