@@ -37,6 +37,7 @@ public class ControllerForSaveAsWindow implements Initializable {
     }
 
     public void insertToDatabaseTitleAndContent(ActionEvent actionEvent) {
+        Controller controller1 = (Controller) Main.loader.getController();
         openingNote.setNtitle(textContentDraft);
         //change Note content in sql to textContent.getText() ===CHECKED===
         //sau phải đổi idNote thành Ntitle vì đây là lưu 1 file mới nên là lúc hỏi nhập tên file sẽ lấy Ntitle từ ô nhập sau đó tìm trong csdl
@@ -52,6 +53,7 @@ public class ControllerForSaveAsWindow implements Initializable {
                 openingNote.setNdateCreated(date);
                 openingNote.setNtag("");
                 Controller.noteDao.saveNote(openingNote);
+                controller1.addNewItemToNoteList(openingNote.getNtitle());
                 Stage stage = (Stage) (SaveAsButton.getScene().getWindow());
                 stage.close();
             }

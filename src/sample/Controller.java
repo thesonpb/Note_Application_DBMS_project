@@ -26,8 +26,6 @@ public class Controller implements Initializable {
     public AnchorPane saveNoteWindow;
     public static NoteDao noteDao = new NoteDao();
     public static Note openingNote = new Note();
-    public Button SaveAsButton;
-    public TextField TitleTextField;
     private MediaFileDao mediaFileDao = new MediaFileDao();
     public static final Logger logger = Logger.getLogger(Controller.class.getName());
     public MenuItem addAttachmentMenuItem;
@@ -44,16 +42,11 @@ public class Controller implements Initializable {
     public TextField fileNameTextField;
     public MenuItem saveAsMenuItem;
 
-    public boolean isSaved = true;
-    public boolean isFirstTimeSaved = true;
-
     public static ObservableList<String> data = FXCollections.observableArrayList();
     String textContentDraft = null;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // ===CHECKED===
-        // lấy tất cả các note trong csdl cho vào data rồi cho vào notelist để hiển thị danh sách note ra
         noteDao.getAllNoteToData();
         noteList.getItems().addAll(data);
         textContent.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -61,37 +54,51 @@ public class Controller implements Initializable {
         });
     }
 
-    private void loadData() {
-
-    }
-
     public void createNewNote(ActionEvent actionEvent) {
-
-        //delete everything on the NotecontentField ===CHECKED===
         textContent.setText("");
-        //add "untitled" item to the notelist
         openingNote.setNtitle("untitled");
         int i = 1;
         while (NoteDao.isOverlapTitle(openingNote.getNtitle())) {
             openingNote.setNtitle("untitled" + i);
             i++;
         }
-
         openingNote.setNtag("");
         noteList.getItems().add(openingNote.getNtitle());
-        isSaved = false;
-        isFirstTimeSaved = true;
     }
 
     public void closeNote(ActionEvent actionEvent) {
         if (openingNote == null) return;
-        //delete everything on the NoteContentField ===CHECKED===
-        textContent.setText("Note closed");
+        if (!noteDao.getNtitleArray().contains(openingNote.getNtitle())) {
+            if (openingNote.getNtitle() == null) {
+                System.out.println("title null");
+                return;
+            }
+            noteList.getItems().remove(openingNote.getNtitle());
+            openingNote.setNcontent(textContent.getText());
+            try {
+                Parent root = FXMLLoader.load(getClass().getResource("saveAsWindow.fxml"));
+                Stage stage = new Stage();
+                stage.getIcons().add(new Image(getClass().getResourceAsStream("save as icon.png")));
+                stage.setTitle("SAVE AS");
+                stage.setScene(new Scene(root));
+                stage.show();
+            } catch (Exception e) {
+                System.out.println("Cant load new window");
+            }
+
+        }
+        else if (!noteDao.getTextContent(openingNote.getNtitle()).equals(textContentDraft)) {
+            try {
+                Parent root = FXMLLoader.load(getClass().getResource("DoYouWantToSaveChange.fxml"));
+                Stage stage = new Stage();
+                stage.setTitle("");
+                stage.setScene(new Scene(root));
+                stage.show();
+            } catch (Exception e) {
+                System.out.println("Cant load new window");
+            }
+        }
         openingNote = new Note();
-        //nếu chưa được save lần nào thì sẽ hiện cửa sổ để lưu save as và đổi tên
-        //nếu là note đã đc lưu trong csdl thì sẽ pop up cửa sổ để lưu content
-//        if (isFirstTimeSaved) ...
-//        else if (!isSaved)
     }
 
     public void saveNote(ActionEvent actionEvent) {
@@ -112,15 +119,39 @@ public class Controller implements Initializable {
         }
 
 
-
     }
 
     public void quitApp(ActionEvent actionEvent) {
-        //nếu chưa được save lần nào thì sẽ hiện cửa sổ để lưu save as và đổi tên
-        //nếu là note đã đc lưu trong csdl thì sẽ pop up cửa sổ để lưu content
-//        if (isFirstTimeSaved) ...
-//        else if (!isSaved)
-        System.exit(0);
+        if (!noteDao.getNtitleArray().contains(openingNote.getNtitle())) {
+            if (openingNote.getNtitle() == null) {
+                System.out.println("title null");
+                return;
+            }
+            noteList.getItems().remove(openingNote.getNtitle());
+            openingNote.setNcontent(textContent.getText());
+            try {
+                Parent root = FXMLLoader.load(getClass().getResource("saveAsWindow.fxml"));
+                Stage stage = new Stage();
+                stage.getIcons().add(new Image(getClass().getResourceAsStream("save as icon.png")));
+                stage.setTitle("SAVE AS");
+                stage.setScene(new Scene(root));
+                stage.show();
+            } catch (Exception e) {
+                System.out.println("Cant load new window");
+            }
+
+        }
+        else if (!noteDao.getTextContent(openingNote.getNtitle()).equals(textContentDraft)) {
+            try {
+                Parent root = FXMLLoader.load(getClass().getResource("DoYouWantToSaveChange.fxml"));
+                Stage stage = new Stage();
+                stage.setTitle("");
+                stage.setScene(new Scene(root));
+                stage.show();
+            } catch (Exception e) {
+                System.out.println("Cant load new window");
+            }
+        }
     }
 
 
@@ -129,15 +160,34 @@ public class Controller implements Initializable {
             System.out.println("title null");
             return;
         }
-        //update Ncontent and save to database ===CHECKED===
-        //sau phải đổi idNote thành idNote của openingNote
-        try {
-            noteDao.saveTextContent(textContentDraft, openingNote.getNtitle());
-            openingNote.setNcontent(textContentDraft);
-            isSaved = true;
-            isFirstTimeSaved = false;
-        } catch (Exception e) {
-            logger.log(Level.SEVERE, e.getMessage());
+        //nếu chưa tồn tại trong csdl thì làm như save as, nếu tồn tại rồi thì làm bước dưới
+        if (!noteDao.getNtitleArray().contains(openingNote.getNtitle())) {
+            if (openingNote.getNtitle() == null) {
+                System.out.println("title null");
+                return;
+            }
+            noteList.getItems().remove(openingNote.getNtitle());
+            openingNote.setNcontent(textContent.getText());
+            try {
+                Parent root = FXMLLoader.load(getClass().getResource("saveAsWindow.fxml"));
+                Stage stage = new Stage();
+                stage.getIcons().add(new Image(getClass().getResourceAsStream("save as icon.png")));
+                stage.setTitle("SAVE AS");
+                stage.setScene(new Scene(root));
+                stage.show();
+            } catch (Exception e) {
+                System.out.println("Cant load new window");
+            }
+
+        } else {
+            //update Ncontent and save to database ===CHECKED===
+            //sau phải đổi idNote thành idNote của openingNote
+            try {
+                noteDao.saveTextContent(textContentDraft, openingNote.getNtitle());
+                openingNote.setNcontent(textContentDraft);
+            } catch (Exception e) {
+                logger.log(Level.SEVERE, e.getMessage());
+            }
         }
     }
 
@@ -165,8 +215,14 @@ public class Controller implements Initializable {
     public void displayTextContent(MouseEvent mouseEvent) {
         String title = noteList.getSelectionModel().getSelectedItem();
         openingNote.setNtitle(title);
+        openingNote.setNcontent(noteDao.getTextContent(openingNote.getNtitle()));
         textContent.setText(NoteDao.getTextContent(title));
     }
 
-
+    public void addNewItemToNoteList(String s) {
+        noteList.getItems().add(s);
+    }
+    public void setTextToTextField(String s) {
+        textContent.setText(s);
+    }
 }

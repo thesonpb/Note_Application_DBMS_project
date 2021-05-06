@@ -8,10 +8,11 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 public class Main extends Application {
-
+    public static FXMLLoader loader = null;
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
+        loader = new FXMLLoader(getClass().getResource("sample.fxml"));
+        Parent root = loader.load();
         primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("noteIcon.png")));
         primaryStage.setTitle("Note");
         primaryStage.setScene(new Scene(root, 800, 600));
