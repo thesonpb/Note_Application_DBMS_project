@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="201.0" prefWidth="391.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.OverlapTitleController">
+   <children>
+      <Label layoutX="82.0" layoutY="49.0" prefHeight="0.0" prefWidth="253.0" text="The title already exists">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Label layoutX="57.0" layoutY="84.0" text="Do you want to replace it?">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Button layoutX="153.0" layoutY="135.0" mnemonicParsing="false" text="Yes" fx:id = "YesButton" onAction="#Replace"/>
+      <Button layoutX="209.0" layoutY="135.0" mnemonicParsing="false" text="No" fx:id = "NoButton" onAction="#close"/>
+   </children>
+</AnchorPane>

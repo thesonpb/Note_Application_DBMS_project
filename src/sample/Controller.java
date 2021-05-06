@@ -16,6 +16,7 @@ import javafx.stage.Stage;
 
 import java.io.*;
 import java.net.URL;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.ResourceBundle;
@@ -41,6 +42,7 @@ public class Controller implements Initializable {
     public ListView<String> noteList; //Ntitle from database
     public TextField fileNameTextField;
     public MenuItem saveAsMenuItem;
+    public static FXMLLoader loader;
 
     public static ObservableList<String> data = FXCollections.observableArrayList();
     String textContentDraft = null;
@@ -63,7 +65,9 @@ public class Controller implements Initializable {
             i++;
         }
         openingNote.setNtag("");
+        openingNote.setNcontent("");
         noteList.getItems().add(openingNote.getNtitle());
+        System.out.println(openingNote.getNtitle());
     }
 
     public void closeNote(ActionEvent actionEvent) {
@@ -76,7 +80,8 @@ public class Controller implements Initializable {
             noteList.getItems().remove(openingNote.getNtitle());
             openingNote.setNcontent(textContent.getText());
             try {
-                Parent root = FXMLLoader.load(getClass().getResource("saveAsWindow.fxml"));
+                loader = new FXMLLoader(getClass().getResource("saveAsWindow.fxml"));
+                Parent root = loader.load();
                 Stage stage = new Stage();
                 stage.getIcons().add(new Image(getClass().getResourceAsStream("save as icon.png")));
                 stage.setTitle("SAVE AS");
@@ -99,6 +104,7 @@ public class Controller implements Initializable {
             }
         }
         openingNote = new Note();
+        textContent.setText("");
     }
 
     public void saveNote(ActionEvent actionEvent) {
@@ -106,9 +112,10 @@ public class Controller implements Initializable {
             System.out.println("title null");
             return;
         }
-        openingNote.setNcontent(textContent.getText());
+        openingNote.setNcontent(textContentDraft);
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("saveAsWindow.fxml"));
+            loader = new FXMLLoader(getClass().getResource("saveAsWindow.fxml"));
+            Parent root = loader.load();
             Stage stage = new Stage();
             stage.getIcons().add(new Image(getClass().getResourceAsStream("save as icon.png")));
             stage.setTitle("SAVE AS");
@@ -130,7 +137,8 @@ public class Controller implements Initializable {
             noteList.getItems().remove(openingNote.getNtitle());
             openingNote.setNcontent(textContent.getText());
             try {
-                Parent root = FXMLLoader.load(getClass().getResource("saveAsWindow.fxml"));
+                loader = new FXMLLoader(getClass().getResource("saveAsWindow.fxml"));
+                Parent root = loader.load();
                 Stage stage = new Stage();
                 stage.getIcons().add(new Image(getClass().getResourceAsStream("save as icon.png")));
                 stage.setTitle("SAVE AS");
@@ -160,16 +168,16 @@ public class Controller implements Initializable {
             System.out.println("title null");
             return;
         }
-        //nếu chưa tồn tại trong csdl thì làm như save as, nếu tồn tại rồi thì làm bước dưới
         if (!noteDao.getNtitleArray().contains(openingNote.getNtitle())) {
             if (openingNote.getNtitle() == null) {
                 System.out.println("title null");
                 return;
             }
             noteList.getItems().remove(openingNote.getNtitle());
-            openingNote.setNcontent(textContent.getText());
+            openingNote.setNcontent(textContentDraft);
             try {
-                Parent root = FXMLLoader.load(getClass().getResource("saveAsWindow.fxml"));
+                loader = new FXMLLoader(getClass().getResource("saveAsWindow.fxml"));
+                Parent root = loader.load();
                 Stage stage = new Stage();
                 stage.getIcons().add(new Image(getClass().getResourceAsStream("save as icon.png")));
                 stage.setTitle("SAVE AS");
@@ -180,8 +188,6 @@ public class Controller implements Initializable {
             }
 
         } else {
-            //update Ncontent and save to database ===CHECKED===
-            //sau phải đổi idNote thành idNote của openingNote
             try {
                 noteDao.saveTextContent(textContentDraft, openingNote.getNtitle());
                 openingNote.setNcontent(textContentDraft);
@@ -224,5 +230,19 @@ public class Controller implements Initializable {
     }
     public void setTextToTextField(String s) {
         textContent.setText(s);
+    }
+    public void replaceContent(String content, String title) {
+        try {
+            noteDao.saveTextContent(content, title);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+    public Note getOpeningNote() {
+        return openingNote;
+    }
+
+    public void removeItemFromNoteList(String ntitle) {
+        noteList.getItems().remove(openingNote.getNtitle());
     }
 }
