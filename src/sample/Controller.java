@@ -24,10 +24,12 @@ import java.util.logging.Logger;
 
 public class Controller implements Initializable {
     public AnchorPane saveNoteWindow;
-    private NoteDao noteDao = new NoteDao();
-    private Note openingNote = new Note();
+    public static NoteDao noteDao = new NoteDao();
+    public static Note openingNote = new Note();
+    public Button SaveAsButton;
+    public TextField TitleTextField;
     private MediaFileDao mediaFileDao = new MediaFileDao();
-    private static final Logger logger = Logger.getLogger(Controller.class.getName());
+    public static final Logger logger = Logger.getLogger(Controller.class.getName());
     public MenuItem addAttachmentMenuItem;
     public MenuItem newNote;
     public MenuItem open;
@@ -97,37 +99,19 @@ public class Controller implements Initializable {
             System.out.println("title null");
             return;
         }
+        openingNote.setNcontent(textContent.getText());
         try {
             Parent root = FXMLLoader.load(getClass().getResource("saveAsWindow.fxml"));
-            System.out.println("root = ");
             Stage stage = new Stage();
             stage.getIcons().add(new Image(getClass().getResourceAsStream("save as icon.png")));
             stage.setTitle("SAVE AS");
-            stage.setScene(new Scene(root, 100, 60));
+            stage.setScene(new Scene(root));
             stage.show();
         } catch (Exception e) {
             System.out.println("Cant load new window");
         }
 
-        //change Note content in sql to textContent.getText() ===CHECKED===
-        //sau phải đổi idNote thành Ntitle vì đây là lưu 1 file mới nên là lúc hỏi nhập tên file sẽ lấy Ntitle từ ô nhập sau đó tìm trong csdl
-        try {
-            //!!!check xem có bị trùng title không đã rồi mới cho lưu
-            if (NoteDao.isOverlapTitle(openingNote.getNtitle()))
-                System.out.println("đổi tên đi");//pop up cửa sổ đổi tên
-            else {
-                String date = new SimpleDateFormat("yyyy/MM/dd").format(new Date());
-                if (textContentDraft != null) {
-                    openingNote.setNcontent(textContentDraft);
-                } else openingNote.setNcontent("");
-                openingNote.setNdateCreated(date);
-                noteDao.saveNote(openingNote);
-                isSaved = true;
-                isFirstTimeSaved = false;
-            }
-        } catch (Exception e) {
-            logger.log(Level.SEVERE, e.getMessage());
-        }
+
 
     }
 
@@ -183,5 +167,6 @@ public class Controller implements Initializable {
         openingNote.setNtitle(title);
         textContent.setText(NoteDao.getTextContent(title));
     }
+
 
 }
