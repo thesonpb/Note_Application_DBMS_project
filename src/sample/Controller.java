@@ -92,8 +92,7 @@ public class Controller implements Initializable {
                 System.out.println("Cant load new window");
             }
 
-        }
-        else if (!noteDao.getTextContent(openingNote.getNtitle()).equals(textContentDraft)) {
+        } else if (!noteDao.getTextContent(openingNote.getNtitle()).equals(textContentDraft)) {
             try {
                 Parent root = FXMLLoader.load(getClass().getResource("DoYouWantToSaveChange.fxml"));
                 Stage stage = new Stage();
@@ -149,8 +148,7 @@ public class Controller implements Initializable {
                 System.out.println("Cant load new window");
             }
 
-        }
-        else if (!noteDao.getTextContent(openingNote.getNtitle()).equals(textContentDraft)) {
+        } else if (!noteDao.getTextContent(openingNote.getNtitle()).equals(textContentDraft)) {
             try {
                 Parent root = FXMLLoader.load(getClass().getResource("DoYouWantToSaveChange.fxml"));
                 Stage stage = new Stage();
@@ -234,9 +232,11 @@ public class Controller implements Initializable {
     public void addNewItemToNoteList(String s) {
         noteList.getItems().add(s);
     }
+
     public void setTextToTextField(String s) {
         textContent.setText(s);
     }
+
     public void replaceContent(String content, String title) {
         try {
             noteDao.saveTextContent(content, title);
@@ -244,6 +244,7 @@ public class Controller implements Initializable {
             throwables.printStackTrace();
         }
     }
+
     public Note getOpeningNote() {
         return openingNote;
     }
