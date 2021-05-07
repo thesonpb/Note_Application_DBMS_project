@@ -9,6 +9,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
@@ -209,9 +210,14 @@ public class Controller implements Initializable {
             String Mname = file.getName();
             String Mlink = file.getAbsolutePath();
             Long Msize = file.length();
-            System.out.println(Msize);
+            System.out.println(Mname);
+            Image image = new Image(file.toURI().toString());
+            ImageView imageView = new ImageView(image);
+            imageView.setFitWidth(200);
+            imageView.setPreserveRatio(true);
+
             //add and show that file on attachmentListView
-            attachmentContent.getItems().add(file);
+            attachmentContent.getItems().add(imageView);
         } catch (Exception e) {
             System.out.println("Cant load new window");
         }
@@ -244,5 +250,22 @@ public class Controller implements Initializable {
 
     public void removeItemFromNoteList(String ntitle) {
         noteList.getItems().remove(openingNote.getNtitle());
+    }
+
+    public void displayImage(MouseEvent mouseEvent) {
+        ImageView imageView = (ImageView) attachmentContent.getSelectionModel().getSelectedItem();
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("Image.fxml"));
+            Parent root = loader.load();
+            ImageController imageController = (ImageController) loader.getController();
+            imageController.loadImage(imageView);
+            System.out.println(imageView.getFitWidth());
+            Stage stage = new Stage();
+            stage.setTitle("Image");
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (Exception e) {
+            System.out.println("Cant load new window");
+        }
     }
 }
