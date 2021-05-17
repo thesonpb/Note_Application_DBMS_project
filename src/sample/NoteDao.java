@@ -2,7 +2,9 @@ package sample;
 
 import java.nio.charset.Charset;
 import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -293,5 +295,56 @@ public class NoteDao {
             }//end finally try
         }//end try
         return arrayList;
+    }
+
+    public static String getDate(String title) {
+        String date1 = null;
+        Date date = null;
+        Connection conn = null;
+        Statement stmt = null;
+        try{
+            //STEP 2: Register JDBC driver
+            Class.forName("com.mysql.jdbc.Driver");
+
+            //STEP 3: Open a connection
+            System.out.println("Connecting to a selected database...");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost/dbms_project", "root", "rootpassword");
+            System.out.println("Connected database successfully...");
+
+            //STEP 4: Execute a query
+            System.out.println("Creating statement...");
+            stmt = conn.createStatement();
+
+            String sql = "SELECT NdateCreated from note where Ntitle = '" + title + "'";
+            ResultSet rs = stmt.executeQuery(sql);
+            //STEP 5: Extract data from result set
+            while(rs.next()){
+                //Retrieve by column name
+                date = rs.getDate("NdateCreated");
+                date1 = new SimpleDateFormat("dd/MM/yyyy").format(date);
+                return date1;
+            }
+            rs.close();
+        }catch(SQLException se){
+            //Handle errors for JDBC
+            se.printStackTrace();
+        }catch(Exception e){
+            //Handle errors for Class.forName
+            e.printStackTrace();
+        }finally{
+            //finally block used to close resources
+            try{
+                if(stmt!=null)
+                    conn.close();
+            }catch(SQLException se){
+            }// do nothing
+            try{
+                if(conn!=null)
+                    conn.close();
+            }catch(SQLException se){
+                se.printStackTrace();
+            }//end finally try
+        }//end try
+        return date1;
     }
 }

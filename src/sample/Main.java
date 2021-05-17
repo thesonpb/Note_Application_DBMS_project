@@ -15,7 +15,7 @@ public class Main extends Application {
         Parent root = loader.load();
         primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("noteIcon.png")));
         primaryStage.setTitle("Note");
-        primaryStage.setScene(new Scene(root, 800, 600));
+        primaryStage.setScene(new Scene(root));
         primaryStage.show();
     }
 

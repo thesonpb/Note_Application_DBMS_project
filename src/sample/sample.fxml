@@ -6,17 +6,15 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.SplitPane?>
-<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<VBox prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+<VBox prefHeight="534.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
   <children>
     <MenuBar prefWidth="900.0" VBox.vgrow="NEVER">
       <menus>
@@ -37,11 +35,11 @@
         </Menu>
       </menus>
     </MenuBar>
-    <SplitPane dividerPositions="0.2505567928730512, 0.7505567928730512" focusTraversable="true" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
-      <items>
-        <AnchorPane>
+      <BorderPane prefHeight="578.0" prefWidth="900.0" VBox.vgrow="ALWAYS">
+         <left>
+        <AnchorPane minHeight="150.0" prefHeight="1000.0" prefWidth="220.0" BorderPane.alignment="CENTER">
           <children>
-            <Label alignment="CENTER" layoutX="14.0" layoutY="14.0" minWidth="60.0" prefWidth="-1.0" style="&#10;" text="List of Notes" textAlignment="CENTER" wrapText="false">
+            <Label alignment="CENTER" layoutX="14.0" layoutY="14.0" minWidth="60.0" prefWidth="-1.0" style="&#10;" text="Note" textAlignment="CENTER" wrapText="false">
               <font>
                 <Font size="18.0" fx:id="x1" />
               </font>
@@ -49,43 +47,36 @@
                 <Color blue="0.624" green="0.624" red="0.624" fx:id="x2" />
               </textFill>
             </Label>
-                  <ListView fx:id="noteList" layoutY="41.0" onMouseClicked="#displayTextContent" prefHeight="504.0" prefWidth="220.0" />
+                  <ListView fx:id="noteList" layoutY="41.0" onMouseClicked="#displayTextContent" prefHeight="1000.0" prefWidth="220.0" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="41.0" />
           </children>
+               <BorderPane.margin>
+                  <Insets />
+               </BorderPane.margin>
         </AnchorPane>
-        <ScrollPane prefHeight="-1.0" prefWidth="-1.0">
-          <content>
-            <AnchorPane id="Content" minHeight="-1.0" minWidth="-1.0" prefHeight="545.0" prefWidth="430.0">
-              <children>
-                <Label alignment="CENTER" font="$x1" layoutX="14.0" layoutY="14.0" style="&#10;" text="Note's title" textAlignment="CENTER" textFill="$x2" wrapText="false" />
-                        <TextField fx:id="textContent" layoutX="14.0" layoutY="41.0" prefHeight="504.0" prefWidth="415.0" />
-              </children>
-            </AnchorPane>
-          </content>
-        </ScrollPane>
-        <AnchorPane>
+         </left>
+         <right>
+        <AnchorPane maxHeight="1000.0" minHeight="150.0" minWidth="220.0" prefHeight="1000.0" prefWidth="220.0" BorderPane.alignment="CENTER">
           <children>
-            <Label alignment="CENTER" font="$x1" layoutX="14.0" layoutY="14.0" style="&#10;" text="Attachments" textAlignment="CENTER" textFill="$x2" wrapText="false" />
-                  <ListView fx:id="attachmentContent" layoutY="41.0" onMouseClicked="#displayImage" prefHeight="504.0" prefWidth="220.0" />
+            <Label alignment="CENTER" font="$x1" layoutX="14.0" layoutY="14.0" style="&#10;" text="Image" textAlignment="CENTER" textFill="$x2" wrapText="false" />
+                  <ListView fx:id="attachmentContent" layoutY="41.0" onMouseClicked="#displayImage" prefHeight="1000.0" prefWidth="220.0" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="41.0" />
           </children>
         </AnchorPane>
-      </items>
-    </SplitPane>
-    <HBox id="HBox" alignment="CENTER_LEFT" spacing="5.0" VBox.vgrow="NEVER">
-      <children>
-        <Label maxHeight="1.7976931348623157E308" maxWidth="-1.0" text="Left status" HBox.hgrow="ALWAYS">
-          <font>
-            <Font size="11.0" fx:id="x3" />
-          </font>
-          <textFill>
-            <Color blue="0.625" green="0.625" red="0.625" fx:id="x4" />
-          </textFill>
-        </Label>
-        <Pane prefHeight="-1.0" prefWidth="-1.0" HBox.hgrow="ALWAYS" />
-        <Label font="$x3" maxWidth="-1.0" text="Right status" textFill="$x4" HBox.hgrow="NEVER" />
-      </children>
-      <padding>
-        <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
-      </padding>
-    </HBox>
+         </right>
+         <center>
+      <AnchorPane id="Content" maxHeight="1000.0" minHeight="150.0" minWidth="250.0" prefHeight="1000.0" prefWidth="460.0" BorderPane.alignment="CENTER">
+        <children>
+          <Label alignment="CENTER" font="$x1" layoutX="14.0" layoutY="14.0" style="&#10;" text="Content" textAlignment="CENTER" textFill="$x2" wrapText="false" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="14.0" />
+                  <TextArea fx:id="textContent" layoutX="14.0" layoutY="41.0" maxHeight="1000.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1000.0" prefWidth="458.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="41.0" />
+        </children>
+      </AnchorPane>
+         </center>
+         <bottom>
+            <AnchorPane maxHeight="20.0" minHeight="20.0" minWidth="-Infinity" prefHeight="20.0" prefWidth="900.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Text fx:id="date" layoutX="439.0" layoutY="14.0" strokeType="OUTSIDE" strokeWidth="0.0" />
+               </children>
+            </AnchorPane>
+         </bottom>
+      </BorderPane>
   </children>
 </VBox>

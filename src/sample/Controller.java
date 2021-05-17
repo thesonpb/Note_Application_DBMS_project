@@ -13,9 +13,12 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
+import java.beans.IntrospectionException;
 import java.io.*;
 import java.net.URL;
 import java.sql.SQLException;
@@ -29,12 +32,13 @@ public class Controller implements Initializable {
     public AnchorPane saveNoteWindow;
     public static NoteDao noteDao = new NoteDao();
     public static Note openingNote = new Note();
+    public Text date;
     private MediaFileDao mediaFileDao = new MediaFileDao();
     public static final Logger logger = Logger.getLogger(Controller.class.getName());
     public MenuItem addAttachmentMenuItem;
     public MenuItem newNote;
     public MenuItem open;
-    public TextField textContent;
+    public TextArea textContent;
     public ListView attachmentContent; //mediaFile from database
     public AnchorPane newNoteWindow;
     public MenuItem closeMenuItem;
@@ -106,7 +110,7 @@ public class Controller implements Initializable {
             }
         }
         openingNote = new Note();
-        textContent.setText("");
+//        textContent.setText("");
         attachmentContent.getItems().clear();
         imageData.clear();
     }
@@ -215,8 +219,6 @@ public class Controller implements Initializable {
             long Msize = file.length();
             String NoteTitle = openingNote.getNtitle();
             MediaFileDao.insertIntoDatabase(Mname, Mlink, Msize, NoteTitle);
-            System.out.println(file);
-            System.out.println(file.toURI().toString());
             Image image = new Image(file.toURI().toString());
             ImageView imageView = new ImageView(image);
             imageView.setFitWidth(200);
@@ -235,6 +237,7 @@ public class Controller implements Initializable {
         openingNote.setNtitle(title);
         openingNote.setNcontent(noteDao.getTextContent(openingNote.getNtitle()));
         textContent.setText(NoteDao.getTextContent(title));
+        date.setText(noteDao.getDate(openingNote.getNtitle()));
         attachmentContent.getItems().clear();
         imageData.clear();
         mediaFileDao.getAllImageToImageData(openingNote.getNtitle());
@@ -267,6 +270,8 @@ public class Controller implements Initializable {
 
     public void displayImage(MouseEvent mouseEvent) {
         ImageView imageView = (ImageView) attachmentContent.getSelectionModel().getSelectedItem();
+        Integer index = attachmentContent.getItems().indexOf(imageView);
+        attachmentContent.getItems().remove(imageView);
         imageView.setFitWidth(800);
         imageView.setPreserveRatio(true);
         BorderPane pane;
@@ -278,7 +283,12 @@ public class Controller implements Initializable {
 
         stage = new Stage();
         stage.setScene(scene);
-        stage.show();
+        stage.setResizable(false);
+        stage.showAndWait();
+        imageView.setFitWidth(200);
+        imageView.setPreserveRatio(true);
+        attachmentContent.getItems().add(index, imageView);
+        attachmentContent.getSelectionModel().clearSelection();
     }
 
     public void showAboutWindow(ActionEvent actionEvent) {
@@ -286,6 +296,8 @@ public class Controller implements Initializable {
             Parent root = FXMLLoader.load(getClass().getResource("Image.fxml"));
             Stage stage = new Stage();
             stage.setTitle("About this");
+            stage.setResizable(false);
+            stage.initStyle(StageStyle.UTILITY);
             stage.getIcons().add(new Image(getClass().getResourceAsStream("noteIcon.png")));
             stage.setScene(new Scene(root));
             stage.showAndWait();

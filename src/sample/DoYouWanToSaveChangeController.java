@@ -31,6 +31,7 @@ public class DoYouWanToSaveChangeController {
         } catch (Exception e) {
             Controller.logger.log(Level.SEVERE, e.getMessage());
         }
+        controller1.setTextToTextField("");
         Stage stage = (Stage) (ConfirmSaveButton.getScene().getWindow());
         stage.close();
     }
