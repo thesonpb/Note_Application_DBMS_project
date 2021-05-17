@@ -1,5 +1,7 @@
 package sample;
+
 import java.sql.*;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -9,8 +11,9 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
     public static FXMLLoader loader = null;
+
     @Override
-    public void start(Stage primaryStage) throws Exception{
+    public void start(Stage primaryStage) throws Exception {
         loader = new FXMLLoader(getClass().getResource("sample.fxml"));
         Parent root = loader.load();
         primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("noteIcon.png")));

@@ -6,23 +6,33 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="308.0" prefWidth="596.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.ImageController">
-   <children>
-      <ImageView fitHeight="73.0" fitWidth="80.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@noteIcon.png" />
-         </image>
-      </ImageView>
-      <Button fx:id="ok" layoutX="510.0" layoutY="265.0" mnemonicParsing="false" onAction="#close" prefHeight="31.0" prefWidth="66.0" text="Ok" />
-      <Text layoutX="73.0" layoutY="20.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Something about note, you can call it todo list or anything you like." />
-      <Text layoutX="73.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Version 1.0 (17/05/2021)" />
-      <Text layoutX="73.0" layoutY="67.0" strokeType="OUTSIDE" strokeWidth="0.0" text="The Son. All rights reserved." />
-      <Text layoutX="14.0" layoutY="103.0" strokeType="OUTSIDE" strokeWidth="0.0" text="This product is licensed under the The Son Organization." />
-      <Text layoutX="14.0" layoutY="149.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Follow The Son to discover more topic like music, vinahouse, csgo,..." />
-      <Text layoutX="14.0" layoutY="170.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Facebook: https://www.facebook.com/thesonlp/" />
-      <Text layoutX="14.0" layoutY="191.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Instagram: https://www.instagram.com/theson__/" />
-      <Text layoutX="14.0" layoutY="212.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Youtube:  https://www.youtube.com/channel/UCgy1myUihMQnb_GEn8BCNkA" />
-      <Text layoutX="14.0" layoutY="233.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Soundcloud: https://soundcloud.com/user-563049445" />
-      <Text layoutX="14.0" layoutY="260.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Thank you!" />
-   </children>
+<AnchorPane prefHeight="308.0" prefWidth="596.0" xmlns="http://javafx.com/javafx/8.0.171"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.ImageController">
+    <children>
+        <ImageView fitHeight="73.0" fitWidth="80.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@noteIcon.png"/>
+            </image>
+        </ImageView>
+        <Button fx:id="ok" layoutX="510.0" layoutY="265.0" mnemonicParsing="false" onAction="#close" prefHeight="31.0"
+                prefWidth="66.0" text="Ok"/>
+        <Text layoutX="73.0" layoutY="20.0" strokeType="OUTSIDE" strokeWidth="0.0"
+              text="Something about note, you can call it todo list or anything you like."/>
+        <Text layoutX="73.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Version 1.0 (17/05/2021)"/>
+        <Text layoutX="73.0" layoutY="67.0" strokeType="OUTSIDE" strokeWidth="0.0"
+              text="The Son. All rights reserved."/>
+        <Text layoutX="14.0" layoutY="103.0" strokeType="OUTSIDE" strokeWidth="0.0"
+              text="This product is licensed under the The Son Organization."/>
+        <Text layoutX="14.0" layoutY="149.0" strokeType="OUTSIDE" strokeWidth="0.0"
+              text="Follow The Son to discover more topic like music, vinahouse, csgo,..."/>
+        <Text layoutX="14.0" layoutY="170.0" strokeType="OUTSIDE" strokeWidth="0.0"
+              text="Facebook: https://www.facebook.com/thesonlp/"/>
+        <Text layoutX="14.0" layoutY="191.0" strokeType="OUTSIDE" strokeWidth="0.0"
+              text="Instagram: https://www.instagram.com/theson__/"/>
+        <Text layoutX="14.0" layoutY="212.0" strokeType="OUTSIDE" strokeWidth="0.0"
+              text="Youtube:  https://www.youtube.com/channel/UCgy1myUihMQnb_GEn8BCNkA"/>
+        <Text layoutX="14.0" layoutY="233.0" strokeType="OUTSIDE" strokeWidth="0.0"
+              text="Soundcloud: https://soundcloud.com/user-563049445"/>
+        <Text layoutX="14.0" layoutY="260.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Thank you!"/>
+    </children>
 </AnchorPane>

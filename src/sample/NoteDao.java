@@ -17,7 +17,7 @@ public class NoteDao {
         String content = null;
         Connection conn = null;
         Statement stmt = null;
-        try{
+        try {
             //STEP 2: Register JDBC driver
             Class.forName("com.mysql.jdbc.Driver");
 
@@ -33,30 +33,30 @@ public class NoteDao {
             String sql = "SELECT Ncontent from note where Ntitle = '" + title + "'";
             ResultSet rs = stmt.executeQuery(sql);
             //STEP 5: Extract data from result set
-            while(rs.next()){
+            while (rs.next()) {
                 //Retrieve by column name
                 content = rs.getString("Ncontent");
 
                 return content;
             }
             rs.close();
-        }catch(SQLException se){
+        } catch (SQLException se) {
             //Handle errors for JDBC
             se.printStackTrace();
-        }catch(Exception e){
+        } catch (Exception e) {
             //Handle errors for Class.forName
             e.printStackTrace();
-        }finally{
+        } finally {
             //finally block used to close resources
-            try{
-                if(stmt!=null)
+            try {
+                if (stmt != null)
                     conn.close();
-            }catch(SQLException se){
+            } catch (SQLException se) {
             }// do nothing
-            try{
-                if(conn!=null)
+            try {
+                if (conn != null)
                     conn.close();
-            }catch(SQLException se){
+            } catch (SQLException se) {
                 se.printStackTrace();
             }//end finally try
         }//end try
@@ -66,7 +66,7 @@ public class NoteDao {
     public static boolean isOverlapTitle(String ntitle) {
         Connection conn = null;
         Statement stmt = null;
-        try{
+        try {
             //STEP 2: Register JDBC driver
             Class.forName("com.mysql.jdbc.Driver");
 
@@ -82,7 +82,7 @@ public class NoteDao {
             String sql = "SELECT Ntitle from note";
             ResultSet rs = stmt.executeQuery(sql);
             //STEP 5: Extract data from result set
-            while(rs.next()){
+            while (rs.next()) {
                 //Retrieve by column name
                 String title = rs.getString("Ntitle");
 
@@ -90,23 +90,23 @@ public class NoteDao {
                 if (ntitle.equals(title)) return true;
             }
             rs.close();
-        }catch(SQLException se){
+        } catch (SQLException se) {
             //Handle errors for JDBC
             se.printStackTrace();
-        }catch(Exception e){
+        } catch (Exception e) {
             //Handle errors for Class.forName
             e.printStackTrace();
-        }finally{
+        } finally {
             //finally block used to close resources
-            try{
-                if(stmt!=null)
+            try {
+                if (stmt != null)
                     conn.close();
-            }catch(SQLException se){
+            } catch (SQLException se) {
             }// do nothing
-            try{
-                if(conn!=null)
+            try {
+                if (conn != null)
                     conn.close();
-            }catch(SQLException se){
+            } catch (SQLException se) {
                 se.printStackTrace();
             }//end finally try
         }//end try
@@ -157,7 +157,7 @@ public class NoteDao {
     public void saveTextContent(String textContent, String Ntitle) throws SQLException {
         Connection conn = null;
         Statement stmt = null;
-        try{
+        try {
             //STEP 2: Register JDBC driver
             Class.forName("com.mysql.jdbc.Driver");
 
@@ -170,29 +170,29 @@ public class NoteDao {
             System.out.println("Creating statement...");
             stmt = conn.createStatement();
             String sql = "UPDATE note " +
-                    "SET Ncontent = '" + textContent + "' WHERE Ntitle = '" + Ntitle +"';";
+                    "SET Ncontent = '" + textContent + "' WHERE Ntitle = '" + Ntitle + "';";
             stmt.executeUpdate(sql);
             System.out.println(textContent);
             System.out.println(Ntitle);
             System.out.println("note save successfully");
 
-        }catch(SQLException se){
+        } catch (SQLException se) {
             //Handle errors for JDBC
             se.printStackTrace();
-        }catch(Exception e){
+        } catch (Exception e) {
             //Handle errors for Class.forName
             e.printStackTrace();
-        }finally{
+        } finally {
             //finally block used to close resources
-            try{
-                if(stmt!=null)
+            try {
+                if (stmt != null)
                     conn.close();
-            }catch(SQLException se){
+            } catch (SQLException se) {
             }// do nothing
-            try{
-                if(conn!=null)
+            try {
+                if (conn != null)
                     conn.close();
-            }catch(SQLException se){
+            } catch (SQLException se) {
                 se.printStackTrace();
             }//end finally try
         }//end try
@@ -201,7 +201,7 @@ public class NoteDao {
     public void getAllNoteToData() {
         Connection conn = null;
         Statement stmt = null;
-        try{
+        try {
             //STEP 2: Register JDBC driver
             Class.forName("com.mysql.jdbc.Driver");
 
@@ -217,30 +217,30 @@ public class NoteDao {
             String sql = "SELECT Ntitle from note";
             ResultSet rs = stmt.executeQuery(sql);
             //STEP 5: Extract data from result set
-            while(rs.next()){
+            while (rs.next()) {
                 //Retrieve by column name
                 String title = rs.getString("Ntitle");
 
                 Controller.data.add(title);
             }
             rs.close();
-        }catch(SQLException se){
+        } catch (SQLException se) {
             //Handle errors for JDBC
             se.printStackTrace();
-        }catch(Exception e){
+        } catch (Exception e) {
             //Handle errors for Class.forName
             e.printStackTrace();
-        }finally{
+        } finally {
             //finally block used to close resources
-            try{
-                if(stmt!=null)
+            try {
+                if (stmt != null)
                     conn.close();
-            }catch(SQLException se){
+            } catch (SQLException se) {
             }// do nothing
-            try{
-                if(conn!=null)
+            try {
+                if (conn != null)
                     conn.close();
-            }catch(SQLException se){
+            } catch (SQLException se) {
                 se.printStackTrace();
             }//end finally try
         }//end try
@@ -251,7 +251,7 @@ public class NoteDao {
         ArrayList<String> arrayList = new ArrayList<String>();
         Connection conn = null;
         Statement stmt = null;
-        try{
+        try {
             //STEP 2: Register JDBC driver
             Class.forName("com.mysql.jdbc.Driver");
 
@@ -267,30 +267,30 @@ public class NoteDao {
             String sql = "SELECT Ntitle from note";
             ResultSet rs = stmt.executeQuery(sql);
             //STEP 5: Extract data from result set
-            while(rs.next()){
+            while (rs.next()) {
                 //Retrieve by column name
                 String title = rs.getString("Ntitle");
 
                 arrayList.add(title);
             }
             rs.close();
-        }catch(SQLException se){
+        } catch (SQLException se) {
             //Handle errors for JDBC
             se.printStackTrace();
-        }catch(Exception e){
+        } catch (Exception e) {
             //Handle errors for Class.forName
             e.printStackTrace();
-        }finally{
+        } finally {
             //finally block used to close resources
-            try{
-                if(stmt!=null)
+            try {
+                if (stmt != null)
                     conn.close();
-            }catch(SQLException se){
+            } catch (SQLException se) {
             }// do nothing
-            try{
-                if(conn!=null)
+            try {
+                if (conn != null)
                     conn.close();
-            }catch(SQLException se){
+            } catch (SQLException se) {
                 se.printStackTrace();
             }//end finally try
         }//end try
@@ -302,7 +302,7 @@ public class NoteDao {
         Date date = null;
         Connection conn = null;
         Statement stmt = null;
-        try{
+        try {
             //STEP 2: Register JDBC driver
             Class.forName("com.mysql.jdbc.Driver");
 
@@ -318,30 +318,30 @@ public class NoteDao {
             String sql = "SELECT NdateCreated from note where Ntitle = '" + title + "'";
             ResultSet rs = stmt.executeQuery(sql);
             //STEP 5: Extract data from result set
-            while(rs.next()){
+            while (rs.next()) {
                 //Retrieve by column name
                 date = rs.getDate("NdateCreated");
                 date1 = new SimpleDateFormat("dd/MM/yyyy").format(date);
                 return date1;
             }
             rs.close();
-        }catch(SQLException se){
+        } catch (SQLException se) {
             //Handle errors for JDBC
             se.printStackTrace();
-        }catch(Exception e){
+        } catch (Exception e) {
             //Handle errors for Class.forName
             e.printStackTrace();
-        }finally{
+        } finally {
             //finally block used to close resources
-            try{
-                if(stmt!=null)
+            try {
+                if (stmt != null)
                     conn.close();
-            }catch(SQLException se){
+            } catch (SQLException se) {
             }// do nothing
-            try{
-                if(conn!=null)
+            try {
+                if (conn != null)
                     conn.close();
-            }catch(SQLException se){
+            } catch (SQLException se) {
                 se.printStackTrace();
             }//end finally try
         }//end try

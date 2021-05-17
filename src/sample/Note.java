@@ -60,9 +60,11 @@ public class Note {
         Ntitle = ntitle;
         NdateCreated = ndateCreated;
     }
+
     public Note() {
 
     }
+
     public void editTextInNote(String textInTextfield) {
         this.Ncontent = textInTextfield;
     }

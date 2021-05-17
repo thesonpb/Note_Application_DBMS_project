@@ -28,6 +28,7 @@ public class ControllerForSaveAsWindow implements Initializable {
     public TextField TitleTextField;
     String titleDraft = null;
     Note thisNote = null;
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         TitleTextField.setText(Controller.openingNote.getNtitle());
@@ -62,9 +63,7 @@ public class ControllerForSaveAsWindow implements Initializable {
                 } catch (Exception e) {
                     System.out.println("Cant load new window");
                 }
-            }
-
-            else {
+            } else {
                 String date = new SimpleDateFormat("yyyy/MM/dd").format(new Date());
 //                if (textContentDraft != null) {
 //                    openingNote.setNcontent(textContentDraft);
@@ -80,6 +79,7 @@ public class ControllerForSaveAsWindow implements Initializable {
             Controller.logger.log(Level.SEVERE, e.getMessage());
         }
     }
+
     public void closeWindow() {
         Stage stage = (Stage) (SaveAsButton.getScene().getWindow());
         stage.close();
