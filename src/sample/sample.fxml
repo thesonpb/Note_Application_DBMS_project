@@ -7,7 +7,6 @@
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -27,27 +26,13 @@
                   <MenuItem fx:id="addAttachmentMenuItem" mnemonicParsing="false" onAction="#addAttachment" text="Add attachment" />
             <MenuItem fx:id="closeMenuItem" mnemonicParsing="false" onAction="#closeNote" text="Close" />
                   <MenuItem fx:id="saveMenuItem" mnemonicParsing="false" onAction="#saveTextContentToTheFile" text="Save" />
-            <MenuItem fx:id="saveAsMenuItem" mnemonicParsing="false" onAction="#saveNote" text="Save as"  />
+            <MenuItem fx:id="saveAsMenuItem" mnemonicParsing="false" onAction="#saveNote" text="Save as" />
             <MenuItem fx:id="quitMenuItem" mnemonicParsing="false" onAction="#quitApp" text="Quit" />
-          </items>
-        </Menu>
-        <Menu mnemonicParsing="false" text="Edit">
-          <items>
-            <MenuItem mnemonicParsing="false" text="Undo" />
-            <MenuItem mnemonicParsing="false" text="Redo" />
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Cut" />
-            <MenuItem mnemonicParsing="false" text="Copy" />
-            <MenuItem mnemonicParsing="false" text="Paste" />
-            <MenuItem mnemonicParsing="false" text="Delete" />
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Select All" />
-            <MenuItem mnemonicParsing="false" text="Unselect All" />
           </items>
         </Menu>
         <Menu mnemonicParsing="false" text="Help">
           <items>
-            <MenuItem mnemonicParsing="false" text="About Note" />
+            <MenuItem fx:id="aboutButton" mnemonicParsing="false" onAction="#showAboutWindow" text="About Note" />
           </items>
         </Menu>
       </menus>
@@ -64,7 +49,7 @@
                 <Color blue="0.624" green="0.624" red="0.624" fx:id="x2" />
               </textFill>
             </Label>
-                  <ListView fx:id="noteList" layoutY="41.0" prefHeight="504.0" prefWidth="220.0" onMouseClicked="#displayTextContent" />
+                  <ListView fx:id="noteList" layoutY="41.0" onMouseClicked="#displayTextContent" prefHeight="504.0" prefWidth="220.0" />
           </children>
         </AnchorPane>
         <ScrollPane prefHeight="-1.0" prefWidth="-1.0">
@@ -80,7 +65,7 @@
         <AnchorPane>
           <children>
             <Label alignment="CENTER" font="$x1" layoutX="14.0" layoutY="14.0" style="&#10;" text="Attachments" textAlignment="CENTER" textFill="$x2" wrapText="false" />
-                  <ListView fx:id="attachmentContent" layoutY="41.0" prefHeight="504.0" prefWidth="220.0" onMouseClicked="#displayImage"/>
+                  <ListView fx:id="attachmentContent" layoutY="41.0" onMouseClicked="#displayImage" prefHeight="504.0" prefWidth="220.0" />
           </children>
         </AnchorPane>
       </items>

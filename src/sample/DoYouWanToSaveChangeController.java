@@ -26,7 +26,8 @@ public class DoYouWanToSaveChangeController {
     public void SaveContent(ActionEvent actionEvent) {
         Controller controller1 = (Controller) Main.loader.getController();
         try {
-            Controller.noteDao.saveTextContent(controller1.textContent.getText(), Controller.openingNote.getNtitle());
+            Controller.noteDao.saveTextContent(controller1.textContentDraft, Controller.openingNote.getNtitle());
+            System.out.println(Controller.openingNote.getNtitle());
         } catch (Exception e) {
             Controller.logger.log(Level.SEVERE, e.getMessage());
         }

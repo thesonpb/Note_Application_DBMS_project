@@ -39,6 +39,7 @@ public class ControllerForSaveAsWindow implements Initializable {
     public void insertToDatabaseTitleAndContent(ActionEvent actionEvent) {
         Controller controller2 = (Controller) Main.loader.getController();
         thisNote = controller2.getOpeningNote();
+        thisNote.setNtitle(titleDraft);
         if (thisNote.getNcontent() == null) thisNote.setNcontent("");
         Controller controller1 = (Controller) Main.loader.getController();
         if (thisNote.getNtitle() == null) return;

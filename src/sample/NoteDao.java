@@ -21,7 +21,7 @@ public class NoteDao {
 
             //STEP 3: Open a connection
             System.out.println("Connecting to a selected database...");
-            conn = DriverManager.getConnection("jdbc:mysql://localhost/Note_Database_2", "root", "rootpassword");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost/dbms_project", "root", "rootpassword");
             System.out.println("Connected database successfully...");
 
             //STEP 4: Execute a query
@@ -70,7 +70,7 @@ public class NoteDao {
 
             //STEP 3: Open a connection
             System.out.println("Connecting to a selected database...");
-            conn = DriverManager.getConnection("jdbc:mysql://localhost/Note_Database_2", "root", "rootpassword");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost/dbms_project", "root", "rootpassword");
             System.out.println("Connected database successfully...");
 
             //STEP 4: Execute a query
@@ -161,7 +161,7 @@ public class NoteDao {
 
             //STEP 3: Open a connection
             System.out.println("Connecting to a selected database...");
-            conn = DriverManager.getConnection("jdbc:mysql://localhost/Note_Database_2", "root", "rootpassword");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost/dbms_project", "root", "rootpassword");
             System.out.println("Connected database successfully...");
 
             //STEP 4: Execute a query
@@ -170,6 +170,8 @@ public class NoteDao {
             String sql = "UPDATE note " +
                     "SET Ncontent = '" + textContent + "' WHERE Ntitle = '" + Ntitle +"';";
             stmt.executeUpdate(sql);
+            System.out.println(textContent);
+            System.out.println(Ntitle);
             System.out.println("note save successfully");
 
         }catch(SQLException se){
@@ -203,7 +205,7 @@ public class NoteDao {
 
             //STEP 3: Open a connection
             System.out.println("Connecting to a selected database...");
-            conn = DriverManager.getConnection("jdbc:mysql://localhost/Note_Database_2", "root", "rootpassword");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost/dbms_project", "root", "rootpassword");
             System.out.println("Connected database successfully...");
 
             //STEP 4: Execute a query
@@ -253,7 +255,7 @@ public class NoteDao {
 
             //STEP 3: Open a connection
             System.out.println("Connecting to a selected database...");
-            conn = DriverManager.getConnection("jdbc:mysql://localhost/Note_Database_2", "root", "rootpassword");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost/dbms_project", "root", "rootpassword");
             System.out.println("Connected database successfully...");
 
             //STEP 4: Execute a query

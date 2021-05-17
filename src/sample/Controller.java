@@ -12,6 +12,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -45,6 +46,7 @@ public class Controller implements Initializable {
     public MenuItem saveAsMenuItem;
     public static FXMLLoader loader;
 
+    public static ObservableList<ImageView> imageData = FXCollections.observableArrayList();
     public static ObservableList<String> data = FXCollections.observableArrayList();
     String textContentDraft = null;
 
@@ -98,13 +100,15 @@ public class Controller implements Initializable {
                 Stage stage = new Stage();
                 stage.setTitle("");
                 stage.setScene(new Scene(root));
-                stage.show();
+                stage.showAndWait();
             } catch (Exception e) {
                 System.out.println("Cant load new window");
             }
         }
         openingNote = new Note();
         textContent.setText("");
+        attachmentContent.getItems().clear();
+        imageData.clear();
     }
 
     public void saveNote(ActionEvent actionEvent) {
@@ -143,7 +147,7 @@ public class Controller implements Initializable {
                 stage.getIcons().add(new Image(getClass().getResourceAsStream("save as icon.png")));
                 stage.setTitle("SAVE AS");
                 stage.setScene(new Scene(root));
-                stage.show();
+                stage.showAndWait();
             } catch (Exception e) {
                 System.out.println("Cant load new window");
             }
@@ -154,11 +158,12 @@ public class Controller implements Initializable {
                 Stage stage = new Stage();
                 stage.setTitle("");
                 stage.setScene(new Scene(root));
-                stage.show();
+                stage.showAndWait();
             } catch (Exception e) {
                 System.out.println("Cant load new window");
             }
         }
+        System.exit(0);
     }
 
 
@@ -207,8 +212,11 @@ public class Controller implements Initializable {
             File file = fileChooser.showOpenDialog(stage);
             String Mname = file.getName();
             String Mlink = file.getAbsolutePath();
-            Long Msize = file.length();
-            System.out.println(Mname);
+            long Msize = file.length();
+            String NoteTitle = openingNote.getNtitle();
+            MediaFileDao.insertIntoDatabase(Mname, Mlink, Msize, NoteTitle);
+            System.out.println(file);
+            System.out.println(file.toURI().toString());
             Image image = new Image(file.toURI().toString());
             ImageView imageView = new ImageView(image);
             imageView.setFitWidth(200);
@@ -227,6 +235,10 @@ public class Controller implements Initializable {
         openingNote.setNtitle(title);
         openingNote.setNcontent(noteDao.getTextContent(openingNote.getNtitle()));
         textContent.setText(NoteDao.getTextContent(title));
+        attachmentContent.getItems().clear();
+        imageData.clear();
+        mediaFileDao.getAllImageToImageData(openingNote.getNtitle());
+        attachmentContent.getItems().addAll(imageData);
     }
 
     public void addNewItemToNoteList(String s) {
@@ -255,16 +267,28 @@ public class Controller implements Initializable {
 
     public void displayImage(MouseEvent mouseEvent) {
         ImageView imageView = (ImageView) attachmentContent.getSelectionModel().getSelectedItem();
+        imageView.setFitWidth(800);
+        imageView.setPreserveRatio(true);
+        BorderPane pane;
+        Scene scene;
+        Stage stage;
+        pane = new BorderPane();
+        pane.setCenter(imageView);
+        scene = new Scene(pane);
+
+        stage = new Stage();
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public void showAboutWindow(ActionEvent actionEvent) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("Image.fxml"));
-            Parent root = loader.load();
-            ImageController imageController = (ImageController) loader.getController();
-            imageController.loadImage(imageView);
-            System.out.println(imageView.getFitWidth());
+            Parent root = FXMLLoader.load(getClass().getResource("Image.fxml"));
             Stage stage = new Stage();
-            stage.setTitle("Image");
+            stage.setTitle("About this");
+            stage.getIcons().add(new Image(getClass().getResourceAsStream("noteIcon.png")));
             stage.setScene(new Scene(root));
-            stage.show();
+            stage.showAndWait();
         } catch (Exception e) {
             System.out.println("Cant load new window");
         }
