@@ -108,11 +108,13 @@ public class Controller implements Initializable {
             } catch (Exception e) {
                 System.out.println("Cant load new window");
             }
+        } else {
+            textContent.setText("");
+            openingNote = new Note();
+            attachmentContent.getItems().clear();
+            imageData.clear();
         }
-        openingNote = new Note();
-//        textContent.setText("");
-        attachmentContent.getItems().clear();
-        imageData.clear();
+
     }
 
     public void saveNote(ActionEvent actionEvent) {
